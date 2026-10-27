@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://c83o8isaje21l"]
+
+[ext_resource type="Theme" uid="uid://drbijhcdqp8ig" path="res://assets/ui/themes/main_theme.tres" id="1_oo34p"]
+[ext_resource type="Script" uid="uid://cj8uod0sn2hrq" path="res://src/ui/pixel_canvas.gd" id="2_rsikc"]
+[ext_resource type="StyleBox" uid="uid://ckaim50bvs7kp" path="res://assets/ui/themes/button_normal.tres" id="3_x27jl"]
+[ext_resource type="StyleBox" uid="uid://ch6vh1e64kyoj" path="res://assets/ui/themes/button_hover.tres" id="4_yoxf4"]
+
+[node name="GUI" type="Control" unique_id=395760597]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oo34p")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=2114366183]
+layout_mode = 0
+offset_left = 609.0
+offset_top = 88.0
+offset_right = 1046.0
+offset_bottom = 525.0
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer" unique_id=1980761585]
+texture_filter = 1
+layout_mode = 2
+expand_mode = 1
+script = ExtResource("2_rsikc")
+col_1 = Color(1, 1, 1, 1)
+
+[node name="Button" type="Button" parent="." unique_id=21464259]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 44.0
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = ExtResource("3_x27jl")
+theme_override_styles/hover = ExtResource("4_yoxf4")
+text = "Click"

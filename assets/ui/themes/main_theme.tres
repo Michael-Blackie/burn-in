@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://drbijhcdqp8ig"]
+
+[ext_resource type="FontFile" uid="uid://cha2mwwynsgi3" path="res://assets/ui/fonts/VT323-Regular.ttf" id="1_ey3j3"]
+[ext_resource type="StyleBox" uid="uid://ch6vh1e64kyoj" path="res://assets/ui/themes/button_hover.tres" id="1_iml4p"]
+
+[resource]
+default_font = ExtResource("1_ey3j3")
+default_font_size = 24
+UpgradeAffordable/colors/font_color = Color(0, 0, 0, 1)
+UpgradeAffordable/styles/normal = ExtResource("1_iml4p")

@@ -1,6 +1,6 @@
 extends TextureRect
 
-@export var grid_size : int = 48
+@export var grid_size : int = 16
 
 @export var col_1 : Color
 @export var col_2 : Color

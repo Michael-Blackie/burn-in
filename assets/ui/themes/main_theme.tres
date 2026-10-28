@@ -5,6 +5,29 @@
 
 [resource]
 default_font = ExtResource("1_ey3j3")
-default_font_size = 24
+default_font_size = 48
+UpgradeAffordable/base_type = &"Button"
 UpgradeAffordable/colors/font_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_disabled_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_focus_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_hover_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_outline_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_disabled_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_focus_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_hover_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_normal_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/constants/align_to_largest_stylebox = 0
+UpgradeAffordable/constants/h_separation = 0
+UpgradeAffordable/constants/icon_max_width = 0
+UpgradeAffordable/constants/outline_size = 0
+UpgradeAffordable/font_sizes/font_size = 32
+UpgradeAffordable/fonts/font = ExtResource("1_ey3j3")
+UpgradeAffordable/styles/disabled = null
+UpgradeAffordable/styles/focus = null
+UpgradeAffordable/styles/hover = null
 UpgradeAffordable/styles/normal = ExtResource("1_iml4p")
+UpgradeAffordable/styles/pressed = null

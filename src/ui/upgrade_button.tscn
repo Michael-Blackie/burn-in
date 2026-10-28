@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bjp658c4fhrqn"]
+
+[ext_resource type="Theme" uid="uid://drbijhcdqp8ig" path="res://assets/ui/themes/main_theme.tres" id="1_qd35i"]
+[ext_resource type="Script" uid="uid://c2w67fm5efaa7" path="res://src/ui/upgrade_button.gd" id="2_2kk3e"]
+
+[node name="UpgradeButton" type="Button" unique_id=384451521]
+custom_minimum_size = Vector2(0, 48)
+offset_right = 8.0
+offset_bottom = 8.0
+size_flags_horizontal = 3
+theme = ExtResource("1_qd35i")
+theme_type_variation = &"UpgradeAffordable"
+script = ExtResource("2_2kk3e")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1536123485]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="HBoxContainer" unique_id=82921004]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TestName"
+vertical_alignment = 1
+
+[node name="PriceLabel" type="Label" parent="HBoxContainer" unique_id=544546199]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "100"
+vertical_alignment = 1

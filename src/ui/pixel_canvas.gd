@@ -5,13 +5,24 @@ extends TextureRect
 @export var col_1 : Color
 @export var col_2 : Color
 
+var remaining : int
+
 var image : Image
 
 var dirty : bool = false
 
-func _ready() -> void:
-	create_image()
+signal canvas_cleared
+signal pixel_erased(remaining : int, total : int)
 
+
+func _ready() -> void:
+	canvas_cleared.connect(GameManager.new_grid)
+
+	create_image()
+	GameManager.grid_changed.connect(func(size, _n): reset(size))
+	reset(GameManager.grid_size)
+	
+	
 func _process(delta: float) -> void:
 	if dirty:
 		texture.update(image)
@@ -23,8 +34,23 @@ func create_image():
 	texture = ImageTexture.create_from_image(image)
 
 func update_image(x: int, y: int):
+	if image.get_pixel(x, y) == col_2:   # already erased
+		return
+
 	image.set_pixel(x, y, col_2)
 	dirty = true
+	remaining -= 1
+	GameManager.add_pixels(1)
+	pixel_erased.emit(remaining, grid_size * grid_size)
+	if remaining == 0:
+		canvas_cleared.emit()
+
+func reset(new_size: int) -> void:
+	grid_size = new_size
+	remaining = grid_size * grid_size
+	create_image()
+	pixel_erased.emit(remaining, remaining)
+
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

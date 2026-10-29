@@ -79,6 +79,19 @@ border_width_bottom = 3
 border_color = Color(1, 1, 1, 1)
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="CanvasFrame_box"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="Panel_bg"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 8
@@ -162,6 +175,8 @@ Button/styles/hover = SubResource("Btn_outline_hover")
 Button/styles/hover_pressed = SubResource("Btn_solid_hover")
 Button/styles/normal = SubResource("Btn_outline")
 Button/styles/pressed = SubResource("Btn_solid")
+CanvasFrame/base_type = &"PanelContainer"
+CanvasFrame/styles/panel = SubResource("CanvasFrame_box")
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_font")

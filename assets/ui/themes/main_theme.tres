@@ -1,33 +1,230 @@
 [gd_resource type="Theme" format=3 uid="uid://drbijhcdqp8ig"]
 
-[ext_resource type="FontFile" uid="uid://cha2mwwynsgi3" path="res://assets/ui/fonts/VT323-Regular.ttf" id="1_ey3j3"]
-[ext_resource type="StyleBox" uid="uid://ch6vh1e64kyoj" path="res://assets/ui/themes/button_hover.tres" id="1_iml4p"]
+[ext_resource type="FontFile" uid="uid://cqk68coo8yo82" path="res://assets/ui/fonts/monogram.ttf" id="1_font"]
+[ext_resource type="Texture2D" uid="uid://20dtik0myu1m" path="res://assets/ui/themes/locked_dither.png" id="2_dither"]
+[ext_resource type="Texture2D" uid="uid://bllunu3x8epf0" path="res://assets/ui/themes/locked_dashed.png" id="3_dashed"]
+
+[sub_resource type="StyleBoxTexture" id="Btn_locked_plain"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+texture = ExtResource("3_dashed")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxEmpty" id="Btn_focus"]
+
+[sub_resource type="StyleBoxFlat" id="Btn_outline_hover"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Btn_solid_hover"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Btn_outline"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Btn_solid"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Panel_bg"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Progress_bg"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Progress_fill"]
+bg_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="Btn_solid_pressed"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="UpgradeLabel_box"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="UpgradeLabelLocked_box"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxTexture" id="Btn_locked"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+texture = ExtResource("2_dither")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxFlat" id="Scroll_grabber"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="Scroll_track"]
+content_margin_left = 2.0
+content_margin_right = 2.0
 
 [resource]
-default_font = ExtResource("1_ey3j3")
-default_font_size = 48
+default_font = ExtResource("1_font")
+default_font_size = 32
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_font")
+Button/styles/disabled = SubResource("Btn_locked_plain")
+Button/styles/focus = SubResource("Btn_focus")
+Button/styles/hover = SubResource("Btn_outline_hover")
+Button/styles/hover_pressed = SubResource("Btn_solid_hover")
+Button/styles/normal = SubResource("Btn_outline")
+Button/styles/pressed = SubResource("Btn_solid")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_font")
+LabelCounter/base_type = &"Label"
+LabelCounter/font_sizes/font_size = 64
+LabelTitle/base_type = &"Label"
+LabelTitle/font_sizes/font_size = 48
+Panel/styles/panel = SubResource("Panel_bg")
+ProgressBar/constants/outline_size = 0
+ProgressBar/font_sizes/font_size = 16
+ProgressBar/fonts/font = ExtResource("1_font")
+ProgressBar/styles/background = SubResource("Progress_bg")
+ProgressBar/styles/fill = SubResource("Progress_fill")
+ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
+ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
+ScrollContainer/icons/scroll_hint_horizontal = null
+ScrollContainer/icons/scroll_hint_vertical = null
+ScrollContainer/styles/focus = null
 UpgradeAffordable/base_type = &"Button"
 UpgradeAffordable/colors/font_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/font_disabled_color = Color(0, 0, 0, 1)
 UpgradeAffordable/colors/font_focus_color = Color(0, 0, 0, 1)
 UpgradeAffordable/colors/font_hover_color = Color(0, 0, 0, 1)
 UpgradeAffordable/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/font_outline_color = Color(0, 0, 0, 1)
 UpgradeAffordable/colors/font_pressed_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_disabled_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_focus_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_hover_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_normal_color = Color(0, 0, 0, 1)
-UpgradeAffordable/colors/icon_pressed_color = Color(0, 0, 0, 1)
-UpgradeAffordable/constants/align_to_largest_stylebox = 0
-UpgradeAffordable/constants/h_separation = 0
-UpgradeAffordable/constants/icon_max_width = 0
-UpgradeAffordable/constants/outline_size = 0
-UpgradeAffordable/font_sizes/font_size = 32
-UpgradeAffordable/fonts/font = ExtResource("1_ey3j3")
-UpgradeAffordable/styles/disabled = null
-UpgradeAffordable/styles/focus = null
-UpgradeAffordable/styles/hover = null
-UpgradeAffordable/styles/normal = ExtResource("1_iml4p")
-UpgradeAffordable/styles/pressed = null
+UpgradeAffordable/styles/disabled = SubResource("Btn_solid")
+UpgradeAffordable/styles/focus = SubResource("Btn_focus")
+UpgradeAffordable/styles/hover = SubResource("Btn_solid_hover")
+UpgradeAffordable/styles/hover_pressed = SubResource("Btn_solid_pressed")
+UpgradeAffordable/styles/normal = SubResource("Btn_solid")
+UpgradeAffordable/styles/pressed = SubResource("Btn_solid_pressed")
+UpgradeExpensive/base_type = &"Button"
+UpgradeExpensive/colors/font_color = Color(1, 1, 1, 1)
+UpgradeExpensive/colors/font_disabled_color = Color(1, 1, 1, 1)
+UpgradeExpensive/colors/font_focus_color = Color(1, 1, 1, 1)
+UpgradeExpensive/colors/font_hover_color = Color(1, 1, 1, 1)
+UpgradeExpensive/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+UpgradeExpensive/colors/font_pressed_color = Color(1, 1, 1, 1)
+UpgradeExpensive/styles/disabled = SubResource("Btn_outline")
+UpgradeExpensive/styles/focus = SubResource("Btn_focus")
+UpgradeExpensive/styles/hover = SubResource("Btn_outline_hover")
+UpgradeExpensive/styles/hover_pressed = SubResource("Btn_outline")
+UpgradeExpensive/styles/normal = SubResource("Btn_outline")
+UpgradeExpensive/styles/pressed = SubResource("Btn_outline")
+UpgradeLabel/base_type = &"Label"
+UpgradeLabel/styles/normal = SubResource("UpgradeLabel_box")
+UpgradeLabelLocked/base_type = &"Label"
+UpgradeLabelLocked/colors/font_color = Color(1, 1, 1, 1)
+UpgradeLabelLocked/styles/normal = SubResource("UpgradeLabelLocked_box")
+UpgradeLocked/base_type = &"Button"
+UpgradeLocked/colors/font_color = Color(1, 1, 1, 1)
+UpgradeLocked/colors/font_disabled_color = Color(1, 1, 1, 1)
+UpgradeLocked/colors/font_focus_color = Color(1, 1, 1, 1)
+UpgradeLocked/colors/font_hover_color = Color(1, 1, 1, 1)
+UpgradeLocked/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+UpgradeLocked/colors/font_pressed_color = Color(1, 1, 1, 1)
+UpgradeLocked/styles/disabled = SubResource("Btn_locked")
+UpgradeLocked/styles/focus = SubResource("Btn_focus")
+UpgradeLocked/styles/hover = SubResource("Btn_locked")
+UpgradeLocked/styles/hover_pressed = SubResource("Btn_locked")
+UpgradeLocked/styles/normal = SubResource("Btn_locked")
+UpgradeLocked/styles/pressed = SubResource("Btn_locked")
+VScrollBar/styles/grabber = SubResource("Scroll_grabber")
+VScrollBar/styles/grabber_highlight = SubResource("Scroll_grabber")
+VScrollBar/styles/grabber_pressed = SubResource("Scroll_grabber")
+VScrollBar/styles/scroll = SubResource("Scroll_track")
+VScrollBar/styles/scroll_focus = SubResource("Scroll_track")

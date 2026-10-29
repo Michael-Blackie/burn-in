@@ -1,0 +1,137 @@
+[gd_resource type="Theme" format=3 uid="uid://drbijhcdqp8ig"]
+
+[ext_resource type="FontFile" uid="uid://cha2mwwynsgi3" path="res://assets/ui/fonts/VT323-Regular.ttf" id="1_ey3j3"]
+[ext_resource type="StyleBox" uid="uid://ch6vh1e64kyoj" path="res://assets/ui/themes/button_hover.tres" id="1_iml4p"]
+[ext_resource type="FontFile" uid="uid://cqk68coo8yo82" path="res://assets/ui/fonts/monogram.ttf" id="3_cockf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvdti"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cockf"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oo34p"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvgg5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gx1cm"]
+bg_color = Color(1, 1, 1, 1)
+border_width_bottom = 12
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xvgg5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jocap"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ryn8q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gqphy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6devt"]
+
+[resource]
+default_font = ExtResource("3_cockf")
+default_font_size = 48
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/colors/icon_disabled_color = Color(0, 0, 0, 1)
+Button/colors/icon_focus_color = Color(0, 0, 0, 1)
+Button/colors/icon_hover_color = Color(0, 0, 0, 1)
+Button/colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/icon_normal_color = Color(0, 0, 0, 1)
+Button/colors/icon_pressed_color = Color(0, 0, 0, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 0
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("3_cockf")
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = null
+Button/styles/normal = null
+Button/styles/pressed = null
+Panel/styles/panel = SubResource("StyleBoxFlat_uvdti")
+ProgressBar/constants/outline_size = 0
+ProgressBar/font_sizes/font_size = 16
+ProgressBar/fonts/font = ExtResource("3_cockf")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_cockf")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_oo34p")
+ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
+ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
+ScrollContainer/icons/scroll_hint_horizontal = null
+ScrollContainer/icons/scroll_hint_vertical = null
+ScrollContainer/styles/focus = null
+TabContainer/colors/drop_mark_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_disabled_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_hovered_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_outline_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabContainer/colors/icon_disabled_color = Color(0, 0, 0, 1)
+TabContainer/colors/icon_hovered_color = Color(0, 0, 0, 1)
+TabContainer/colors/icon_selected_color = Color(0, 0, 0, 1)
+TabContainer/colors/icon_unselected_color = Color(0, 0, 0, 1)
+TabContainer/constants/icon_max_width = 0
+TabContainer/constants/icon_separation = 0
+TabContainer/constants/outline_size = 0
+TabContainer/constants/side_margin = 0
+TabContainer/font_sizes/font_size = 48
+TabContainer/fonts/font = ExtResource("3_cockf")
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = null
+TabContainer/icons/drop_mark = null
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = null
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = null
+TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_xvgg5")
+TabContainer/styles/tab_focus = null
+TabContainer/styles/tab_hovered = null
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_gx1cm")
+TabContainer/styles/tab_unselected = null
+TabContainer/styles/tabbar_background = null
+UpgradeAffordable/base_type = &"Button"
+UpgradeAffordable/colors/font_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_disabled_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_focus_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_hover_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_outline_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/font_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_disabled_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_focus_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_hover_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_normal_color = Color(0, 0, 0, 1)
+UpgradeAffordable/colors/icon_pressed_color = Color(0, 0, 0, 1)
+UpgradeAffordable/constants/align_to_largest_stylebox = 0
+UpgradeAffordable/constants/h_separation = 0
+UpgradeAffordable/constants/icon_max_width = 0
+UpgradeAffordable/constants/outline_size = 0
+UpgradeAffordable/font_sizes/font_size = 32
+UpgradeAffordable/fonts/font = ExtResource("1_ey3j3")
+UpgradeAffordable/styles/disabled = null
+UpgradeAffordable/styles/focus = null
+UpgradeAffordable/styles/hover = null
+UpgradeAffordable/styles/normal = ExtResource("1_iml4p")
+UpgradeAffordable/styles/pressed = null
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_xvgg5")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_jocap")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_ryn8q")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_gqphy")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_6devt")

@@ -1,0 +1,117 @@
+extends TextureRect
+
+@export var col_1 : Color
+@export var col_2 : Color
+
+var grid_size : int
+
+var alive : PackedInt32Array
+var slot : PackedInt32Array
+
+var image : Image
+
+var dirty : bool = false
+var _cleared : bool = false
+var _acc : float = 0.0
+
+signal canvas_cleared
+signal pixel_erased(remaining : int, total : int)
+
+
+func _ready() -> void:
+	canvas_cleared.connect(GameManager.new_grid)
+
+	create_image()
+	GameManager.grid_changed.connect(func(size, _n): reset(size))
+	reset(GameManager.grid_size)
+	
+	
+func _process(delta: float) -> void:
+	# Handle auto clickers
+	_acc += GameManager.auto_rate * delta
+	var n := int(_acc)
+	if n > 0 and not _cleared:
+		var erased := erase_random(n)
+		_acc -= erased                     # what wasn't used carries over to the next grid
+		if erased > 0:
+			GameManager.add_pixels(erased)
+			pixel_erased.emit(alive.size(), slot.size())
+		check_cleared()
+		
+
+	# Handle grid updates
+	if dirty:
+		texture.update(image)
+		dirty = false
+
+func create_image():
+	image = Image.create(grid_size, grid_size, false, Image.FORMAT_RGBA8)
+	image.fill(col_1)
+	texture = ImageTexture.create_from_image(image)
+
+func update_image(x: int, y: int):
+	var erased = erase_index(y * grid_size + x)
+
+	if not erased or _cleared:   # already erased
+		return
+
+	image.set_pixel(x, y, col_2)
+	dirty = true
+	GameManager.add_pixels(1)
+	pixel_erased.emit(alive.size(), slot.size())
+	check_cleared()
+
+func reset(new_size: int) -> void:
+	grid_size = new_size
+	var total = grid_size * grid_size
+
+	alive.resize(total)
+	slot.resize(total)
+
+	_cleared = false
+
+	for i in total:
+		alive[i] = i
+		slot[i] = i
+
+	create_image()
+	pixel_erased.emit(alive.size(), alive.size())
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		var cell = find_pos_in_grid(event.position)
+		update_image(cell.x, cell.y)
+			
+
+func find_pos_in_grid(pos: Vector2):
+	var cell_size := size / grid_size   # separate x/y in case it's not square
+	var coords := Vector2i((pos / cell_size).floor())
+	return coords.clamp(Vector2i.ZERO, Vector2i(grid_size - 1, grid_size - 1))
+
+func erase_index(i: int) -> bool:
+	var s := slot[i]
+	if s == -1:
+		return false                  # already erased; this replaces your get_pixel check
+
+	var last := alive[alive.size() - 1]
+	alive[s] = last                   # move the last entry into the gap
+	slot[last] = s                    # tell it where it lives now
+	alive.resize(alive.size() - 1)    # drop the old last entry
+	slot[i] = -1
+
+	image.set_pixel(i % grid_size, i / grid_size, col_2)
+	dirty = true
+	return true
+
+func erase_random(n: int) -> int:
+	var erased := 0
+	while erased < n and alive.size() > 0:
+		erase_index(alive[randi() % alive.size()])
+		erased += 1
+	return erased
+	
+func check_cleared():
+	if alive.is_empty():
+		_cleared = true
+		canvas_cleared.emit()

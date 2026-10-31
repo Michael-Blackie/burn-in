@@ -1,0 +1,205 @@
+[gd_scene format=3 uid="uid://c83o8isaje21l"]
+
+[ext_resource type="Theme" uid="uid://drbijhcdqp8ig" path="res://assets/ui/themes/main_theme.tres" id="1_oo34p"]
+[ext_resource type="Script" uid="uid://cnbogmma0u84y" path="res://src/ui/ui.gd" id="2_oo34p"]
+[ext_resource type="Script" uid="uid://cj8uod0sn2hrq" path="res://src/ui/pixel_canvas.gd" id="2_rsikc"]
+[ext_resource type="Shader" uid="uid://dm6ogrcn8j7gd" path="res://assets/shaders/burn.gdshader" id="3_oo34p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uvdti"]
+shader = ExtResource("3_oo34p")
+shader_parameter/paper_color = Color(1, 1, 1, 1)
+shader_parameter/ink_color = Color(0, 0, 0, 1)
+shader_parameter/canvas_px = 576.0
+shader_parameter/dot_px = 3.0
+shader_parameter/ash_level = 0.85
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_tabs"]
+
+[node name="GUI" type="Control" unique_id=395760597 node_paths=PackedStringArray("canvas", "ash_label", "grid_size_label", "page_label", "canvas_progress_label", "canvas_progress", "ash_upgrades", "page_upgrades")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oo34p")
+script = ExtResource("2_oo34p")
+canvas = NodePath("HBoxContainer/CanvasArea/CanvasColumn/CanvasFrame/TextureRect")
+ash_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/AshCounter")
+grid_size_label = NodePath("HBoxContainer/CanvasArea/CanvasColumn/Header/GridSizeLabel")
+page_label = NodePath("HBoxContainer/CanvasArea/CanvasColumn/Header/PageLabel")
+canvas_progress_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/CanvasProgressLabel")
+canvas_progress = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/CanvasProgress")
+ash_upgrades = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades")
+page_upgrades = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1711346739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2126596787]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="CanvasArea" type="CenterContainer" parent="HBoxContainer" unique_id=1450928371]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CanvasColumn" type="VBoxContainer" parent="HBoxContainer/CanvasArea" unique_id=62197010]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="HBoxContainer/CanvasArea/CanvasColumn" unique_id=1298320559]
+layout_mode = 2
+
+[node name="PageLabel" type="Label" parent="HBoxContainer/CanvasArea/CanvasColumn/Header" unique_id=1779291976]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PAGE 01"
+
+[node name="GridSizeLabel" type="Label" parent="HBoxContainer/CanvasArea/CanvasColumn/Header" unique_id=1672886904]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "16 x 16"
+
+[node name="CanvasFrame" type="PanelContainer" parent="HBoxContainer/CanvasArea/CanvasColumn" unique_id=2114366183]
+layout_mode = 2
+theme_type_variation = &"CanvasFrame"
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CanvasArea/CanvasColumn/CanvasFrame" unique_id=1980761585]
+texture_filter = 1
+material = SubResource("ShaderMaterial_uvdti")
+custom_minimum_size = Vector2(576, 576)
+layout_mode = 2
+expand_mode = 1
+script = ExtResource("2_rsikc")
+col_1 = Color(1, 1, 1, 1)
+
+[node name="Panel" type="Panel" parent="HBoxContainer" unique_id=1814571530]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel" unique_id=1914983842]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer" unique_id=1439039694]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=763737995]
+layout_mode = 2
+theme_type_variation = &"LabelTitle"
+text = "BURN-IN"
+
+[node name="Spacer" type="Control" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=52091368]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="AshLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1459292816]
+layout_mode = 2
+text = "ASH"
+
+[node name="AshCounter" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=719670093]
+layout_mode = 2
+theme_type_variation = &"LabelCounter"
+text = "284"
+
+[node name="AshRate" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=505884743]
+layout_mode = 2
+text = "1 per click | 32/s"
+
+[node name="Spacer2" type="Control" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=566681450]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="TabButtons" type="HBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1915314753]
+layout_mode = 2
+
+[node name="AshTab" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons" unique_id=1616096363]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "ASH"
+
+[node name="PagesTab" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons" unique_id=1264654752]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
+disabled = true
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tabs")
+text = "PAGES"
+
+[node name="Spacer4" type="Control" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1274112436]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="AshUpgrades" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=248186420]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_v_separation = 5
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades" unique_id=947997563]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PageUpgrades" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=636568587]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/scrollbar_v_separation = 5
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades" unique_id=162981181]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer3" type="Control" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=490575232]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1550624558]
+layout_mode = 2
+
+[node name="CanvasLeftLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1201655970]
+layout_mode = 2
+text = "Page Left"
+
+[node name="CanvasProgressLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=458258342]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "5 / 16"
+
+[node name="CanvasProgress" type="ProgressBar" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=426663338]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+value = 45.0
+show_percentage = false
+
+[connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/AshTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades" method="set_visible"]
+[connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/PagesTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades" method="set_visible"]

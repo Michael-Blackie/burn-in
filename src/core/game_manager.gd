@@ -1,25 +1,36 @@
 extends Node
 
-var pixels : float = 0
-var screens : int = 0
+var ash : float = 0
+var pages : int = 0
 
-var screens_cleared : int = 0
+var pages_burned : int = 0
 
-var pixel_multi : float = 1.0
-var screen_multi : int = 0
+var ash_multi : float = 1.0
+var page_multi : int = 0
 var brush_size : int = 1
 var auto_rate : float = 0.0
 var drag_erase : bool = false
 
-const GRID_SIZES : Array[int] = [16, 32, 48, 64, 96, 128]
+const PAGES: Array[Texture2D] = [
+	preload("res://assets/pages/shopping_16.png"),
+	preload("res://assets/pages/newspaper_32.png"),
+	preload("res://assets/pages/letter_48.png"),
+	preload("res://assets/pages/diary_64.png"),
+	preload("res://assets/pages/photo_96.png"),
+	preload("res://assets/pages/map_96.png"),
+]
+
+const BLANK_SIZES : Array[int] = [16, 32, 48, 64, 96, 96]
 var grid_size : int = 16
+
+var page_index := 0
 
 var levels : Dictionary = {} 
 var all_upgrades : Array[UpgradeData] = []
 
-signal pixels_changed(pixels : float)
-signal screens_changed(screens : int)
-signal grid_changed(grid_size : int, screen : int)
+signal ash_changed(ash : float)
+signal pages_changed(pages : int)
+signal grid_changed(grid_size : int, page : int)
 signal upgrades_changed()
 
 
@@ -32,38 +43,36 @@ func _ready() -> void:
 			all_upgrades.append(load(directory_path + file_name))
 			print(all_upgrades)
 
-# Pixel methods
-func add_pixels(amount : float):
-	pixels += amount * pixel_multi
-	pixels_changed.emit(pixels)
+# Ash methods
+func add_ash(amount : float):
+	ash += amount * ash_multi
+	ash_changed.emit(ash)
 
-func remove_pixels(amount : float):
-	if amount <= pixels:
-		pixels -= amount
-		pixels_changed.emit(pixels)
+func remove_ash(amount : float):
+	if amount <= ash:
+		ash -= amount
+		ash_changed.emit(ash)
 		return true
 	else:
 		return false
 
-func add_screens(amount : int):
-	screens += amount * screen_multi
-	screens_changed.emit(screens)
+func add_pages(amount : int):
+	pages += amount * page_multi
+	pages_changed.emit(pages)
 
-func remove_screens(amount : int):
-	if amount <= screens:
-		screens -= amount
-		screens_changed.emit(screens)
+func remove_pages(amount : int):
+	if amount <= pages:
+		pages -= amount
+		pages_changed.emit(pages)
 		return true
 	else:
 		return false
 
 # Grid methods
 func new_grid() -> void:
-	screens += 1
-	var i := mini(screens, GRID_SIZES.size() - 1)
-	grid_size = GRID_SIZES[i]
-	await get_tree().create_timer(0.4).timeout
-	grid_changed.emit(grid_size, screens + 1)
+	pages += 1; pages_burned += 1
+	page_index += 1
+	grid_changed.emit(current_size(), page_index + 1)
 
 
 # Upgrade methods
@@ -76,10 +85,10 @@ func can_buy(u: UpgradeData) -> bool:
 		return false
 	
 	var wallet : float
-	if u.currency == UpgradeData.Currency.PIXELS:
-		wallet = pixels
+	if u.currency == UpgradeData.Currency.ASH:
+		wallet = ash
 	else:
-		wallet = screens
+		wallet = pages
 
 	return wallet >= u.cost(lvl)
 
@@ -87,20 +96,27 @@ func buy(u: UpgradeData) -> void:
 	if not can_buy(u):
 		return
 	var price := u.cost(level_of(u))
-	if u.currency == UpgradeData.Currency.PIXELS:
-		remove_pixels(price)
+	if u.currency == UpgradeData.Currency.ASH:
+		remove_ash(price)
 	else:
-		remove_screens(int(price))
+		remove_pages(int(price))
 	levels[u.id] = level_of(u) + 1
 	recalc_stats()
 	upgrades_changed.emit()
 
 func recalc_stats() -> void:
-	pixel_multi = 1.0; brush_size = 1; auto_rate = 0.0; drag_erase = false
+	ash_multi = 1.0; brush_size = 1; auto_rate = 0.0; drag_erase = false
 	for u in all_upgrades:   # Array[UpgradeData], e.g. preloaded from src/data
 		var lvl := level_of(u)
 		match u.stat:
-			UpgradeData.Stat.PIXEL_MULTI: pixel_multi += u.value_per_level * lvl
+			UpgradeData.Stat.ASH_MULTI: ash_multi += u.value_per_level * lvl
 			UpgradeData.Stat.BRUSH_SIZE:  brush_size  += int(u.value_per_level) * lvl
 			UpgradeData.Stat.AUTO_RATE:   auto_rate   += u.value_per_level * lvl
 			UpgradeData.Stat.DRAG_ERASE:  drag_erase = lvl > 0
+
+func current_page() -> Texture2D:
+	return PAGES[mini(page_index, PAGES.size() - 1)]
+
+func current_size() -> int:
+	var tex := current_page()
+	return tex.get_width() if tex else BLANK_SIZES[mini(page_index, BLANK_SIZES.size() - 1)]

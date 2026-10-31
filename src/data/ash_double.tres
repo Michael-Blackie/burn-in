@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://in1ab6prlcyo"]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_ashdb"]
+
+[resource]
+script = ExtResource("1_ashdb")
+id = &"ash_double"
+display_name = "Double Ash"
+currency = 1
+base_cost = 2.0
+cost_growth = 2.0
+max_level = 3
+stat = 4
+value_per_level = 2.0
+description = "Every page you lose makes the rest burn brighter."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"

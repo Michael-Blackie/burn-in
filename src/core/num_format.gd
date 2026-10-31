@@ -21,3 +21,10 @@ static func short(n: float) -> String:
 	else:
 		s = "%.0f" % n
 	return s + SUFFIXES[tier]
+
+
+## Like short(), but keeps one decimal under 1000 so rates read "1.2" not "1".
+static func rate(n: float) -> String:
+	if n >= 1000.0 or is_equal_approx(n, roundf(n)):
+		return short(roundf(n) if n < 1000.0 else n)
+	return "%.1f" % n

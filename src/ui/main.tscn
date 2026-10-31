@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://cnbogmma0u84y" path="res://src/ui/ui.gd" id="2_oo34p"]
 [ext_resource type="Script" uid="uid://cj8uod0sn2hrq" path="res://src/ui/pixel_canvas.gd" id="2_rsikc"]
 [ext_resource type="Shader" uid="uid://dm6ogrcn8j7gd" path="res://assets/shaders/burn.gdshader" id="3_oo34p"]
+[ext_resource type="Script" uid="uid://b4pqweqscfdhg" path="res://src/audio/burn_sfx.gd" id="4_sfx"]
+[ext_resource type="Script" uid="uid://btmahuyg3e4pm" path="res://src/audio/music.gd" id="5_music"]
+[ext_resource type="Script" uid="uid://dyf4dkd5labho" path="res://src/audio/ui_sfx.gd" id="6_uisfx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvdti"]
 shader = ExtResource("3_oo34p")
@@ -15,7 +18,7 @@ shader_parameter/ash_level = 1.0
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_tabs"]
 
-[node name="GUI" type="Control" unique_id=395760597 node_paths=PackedStringArray("canvas", "ash_label", "grid_size_label", "page_label", "canvas_progress_label", "canvas_progress", "ash_upgrades", "page_upgrades")]
+[node name="GUI" type="Control" unique_id=395760597 node_paths=PackedStringArray("canvas", "ash_label", "ash_rate_label", "pages_label", "pages_box", "pages_tab", "grid_size_label", "page_label", "canvas_progress_label", "canvas_progress", "ash_upgrades", "page_upgrades", "tooltip", "tooltip_title", "tooltip_body")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,13 +28,20 @@ grow_vertical = 2
 theme = ExtResource("1_oo34p")
 script = ExtResource("2_oo34p")
 canvas = NodePath("HBoxContainer/CanvasArea/CanvasColumn/CanvasFrame/TextureRect")
-ash_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/AshCounter")
+ash_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/AshBox/AshCounter")
+ash_rate_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/AshRate")
+pages_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/PagesBox/PagesCounter")
+pages_box = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/PagesBox")
+pages_tab = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/PagesTab")
 grid_size_label = NodePath("HBoxContainer/CanvasArea/CanvasColumn/Header/GridSizeLabel")
 page_label = NodePath("HBoxContainer/CanvasArea/CanvasColumn/Header/PageLabel")
 canvas_progress_label = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/CanvasProgressLabel")
 canvas_progress = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/CanvasProgress")
 ash_upgrades = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades")
 page_upgrades = NodePath("HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades")
+tooltip = NodePath("Tooltip")
+tooltip_title = NodePath("Tooltip/VBoxContainer/TooltipTitle")
+tooltip_body = NodePath("Tooltip/VBoxContainer/TooltipBody")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1711346739]
 layout_mode = 1
@@ -113,14 +123,36 @@ text = "BURN-IN"
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="AshLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1459292816]
+[node name="Counters" type="HBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1835204417]
+layout_mode = 2
+
+[node name="AshBox" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters" unique_id=1092733561]
+layout_mode = 2
+
+[node name="AshLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/AshBox" unique_id=1459292816]
 layout_mode = 2
 text = "ASH"
 
-[node name="AshCounter" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=719670093]
+[node name="AshCounter" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/AshBox" unique_id=719670093]
 layout_mode = 2
 theme_type_variation = &"LabelCounter"
 text = "284"
+
+[node name="PagesBox" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters" unique_id=1377150926]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PagesLabel" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/PagesBox" unique_id=884215673]
+layout_mode = 2
+text = "PAGES"
+horizontal_alignment = 2
+
+[node name="PagesCounter" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Counters/PagesBox" unique_id=1620448390]
+layout_mode = 2
+theme_type_variation = &"LabelCounter"
+text = "0"
+horizontal_alignment = 2
 
 [node name="AshRate" type="Label" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=505884743]
 layout_mode = 2
@@ -149,7 +181,7 @@ theme_override_font_sizes/font_size = 48
 disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_tabs")
-text = "PAGES"
+text = "???"
 
 [node name="Spacer4" type="Control" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer" unique_id=1274112436]
 custom_minimum_size = Vector2(0, 5)
@@ -199,6 +231,41 @@ custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 value = 45.0
 show_percentage = false
+
+[node name="BurnSfx" type="Node" parent="." unique_id=1268903417 node_paths=PackedStringArray("canvas")]
+script = ExtResource("4_sfx")
+canvas = NodePath("../HBoxContainer/CanvasArea/CanvasColumn/CanvasFrame/TextureRect")
+
+[node name="Music" type="Node" parent="." unique_id=1730512984]
+script = ExtResource("5_music")
+
+[node name="UiSfx" type="Node" parent="." unique_id=1904377125 node_paths=PackedStringArray("ui")]
+script = ExtResource("6_uisfx")
+ui = NodePath("..")
+
+[node name="Tooltip" type="PanelContainer" parent="." unique_id=1587203946]
+visible = false
+layout_mode = 0
+offset_right = 344.0
+offset_bottom = 120.0
+mouse_filter = 2
+theme_type_variation = &"TooltipBox"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tooltip" unique_id=902734615]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TooltipTitle" type="Label" parent="Tooltip/VBoxContainer" unique_id=1144906272]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"TooltipTitle"
+text = "Upgrade"
+
+[node name="TooltipBody" type="Label" parent="Tooltip/VBoxContainer" unique_id=1679938251]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+text = "What it does"
+autowrap_mode = 3
 
 [connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/AshTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades" method="set_visible"]
 [connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/PagesTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades" method="set_visible"]

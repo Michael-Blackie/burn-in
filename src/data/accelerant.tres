@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://dng7ltswbdmci"]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_w47aw"]
+
+[resource]
+script = ExtResource("1_w47aw")
+id = &"accelerant"
+display_name = "Accelerant"
+base_cost = 30.0
+cost_growth = 10000.0
+max_level = 2
+stat = 1
+description = "A splash of spirit. The flame catches wider."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"

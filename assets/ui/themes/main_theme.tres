@@ -111,6 +111,25 @@ anti_aliasing = false
 bg_color = Color(1, 1, 1, 1)
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="Tooltip_box"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="TooltipTitle_box"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="Btn_solid_pressed"]
 content_margin_left = 12.0
 content_margin_top = 4.0
@@ -195,6 +214,11 @@ ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/icons/scroll_hint_horizontal = null
 ScrollContainer/icons/scroll_hint_vertical = null
 ScrollContainer/styles/focus = null
+TooltipBox/base_type = &"PanelContainer"
+TooltipBox/styles/panel = SubResource("Tooltip_box")
+TooltipTitle/base_type = &"Label"
+TooltipTitle/colors/font_color = Color(0, 0, 0, 1)
+TooltipTitle/styles/normal = SubResource("TooltipTitle_box")
 UpgradeAffordable/base_type = &"Button"
 UpgradeAffordable/colors/font_color = Color(0, 0, 0, 1)
 UpgradeAffordable/colors/font_focus_color = Color(0, 0, 0, 1)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://c2gwrd80xio28"]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_vte0h"]
+
+[resource]
+script = ExtResource("1_vte0h")
+id = &"spreading_embers"
+display_name = "Spreading Embers"
+base_cost = 50.0
+cost_growth = 1.2
+stat = 2
+requires_pages = 1
+description = "The embers creep along the edges by themselves."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"

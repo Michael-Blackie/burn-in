@@ -14,9 +14,9 @@ func _notification(what: int) -> void:
 		_sync_label_colours()
 
 
-func setup(upgrade_name: String, cost: int) -> void:
-	name_label.text = upgrade_name
-	price_label.text = str(cost)
+func setup(upgrade_name: String, price: String) -> void:
+	if name_label.text != upgrade_name: name_label.text = upgrade_name
+	if price_label.text != price: price_label.text = price
 
 
 # Labels use the Label theme type, not the Button's font colours,

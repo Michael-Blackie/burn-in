@@ -6,5 +6,6 @@
 script = ExtResource("1_mymfg")
 id = &"ash_value"
 display_name = "Ash Value"
-base_cost = 20.0
+value_per_level = 0.2
+description = "Burn it slowly. Nothing goes to waste."
 metadata/_custom_type_script = "uid://8ps2mqeq8gii"

@@ -17,6 +17,9 @@ var dirty : bool = false
 var _cleared : bool = false
 var _acc : float = 0.0
 
+var _dragging : bool = false
+var _last_cell : Vector2i
+
 var image : Image
 
 const BURN_TIME := 0.6
@@ -25,6 +28,7 @@ var burn_t : PackedFloat32Array
 
 signal canvas_cleared
 signal pixel_erased(remaining : int, total : int)
+signal burned(count : int, by_player : bool)   # for sound; not emitted by reset()
 
 
 func _ready() -> void:
@@ -43,6 +47,7 @@ func _process(delta: float) -> void:
 		if erased > 0:
 			GameManager.add_ash(erased)
 			pixel_erased.emit(alive.size(), total_paper)
+			burned.emit(erased, false)
 		check_cleared()
 
 	_update_burning(delta)
@@ -53,12 +58,26 @@ func _process(delta: float) -> void:
 		dirty = false
 
 
-func update_image(x: int, y: int):
-	if _cleared or not erase_index(y * grid_size + x):   # ink, or already burning
-		return
-	GameManager.add_ash(1)
-	pixel_erased.emit(alive.size(), total_paper)
-	check_cleared()
+## Burns every cell in the brush around (cx, cy). Returns how many actually burnt.
+func burn_brush(cx: int, cy: int) -> int:
+	var r := GameManager.brush_size - 1          # size 1 = single cell
+	var n := 0
+	for y in range(maxi(cy - r, 0), mini(cy + r, grid_size - 1) + 1):
+		for x in range(maxi(cx - r, 0), mini(cx + r, grid_size - 1) + 1):
+			if (x - cx) * (x - cx) + (y - cy) * (y - cy) <= r * r:   # circle; drop for square
+				if erase_index(y * grid_size + x):
+					n += 1
+	return n
+
+func _burn_cells(cells: Array) -> void:          # one payout per input event
+	if _cleared: return
+	var n := 0
+	for c in cells: n += burn_brush(c.x, c.y)
+	if n > 0:
+		GameManager.add_ash(n)
+		pixel_erased.emit(alive.size(), total_paper)
+		burned.emit(n, true)
+		check_cleared()
 
 
 func reset() -> void:
@@ -71,6 +90,7 @@ func reset() -> void:
 	alive.clear(); slot.resize(total)
 	edge.clear(); edge_slot.resize(total); edge_slot.fill(-1)
 	burning.clear(); burn_t.clear()
+	_dragging = false
 
 	for i in total:
 		var x := i % grid_size; var y := i / grid_size
@@ -88,9 +108,24 @@ func reset() -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var cell = find_pos_in_grid(event.position)
-		update_image(cell.x, cell.y)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		_dragging = event.pressed
+		if event.pressed:
+			_last_cell = find_pos_in_grid(event.position)
+			_burn_cells([_last_cell])
+	elif event is InputEventMouseMotion and _dragging and GameManager.drag_erase:
+		var cell: Vector2i = find_pos_in_grid(event.position)
+		if cell != _last_cell:
+			_burn_cells(_cells_between(_last_cell, cell))
+			_last_cell = cell
+
+
+func _cells_between(a: Vector2i, b: Vector2i) -> Array:
+	var cells := []
+	var steps := maxi(absi(b.x - a.x), absi(b.y - a.y))
+	for s in range(1, steps + 1):
+		cells.append(Vector2i(Vector2(a).lerp(Vector2(b), float(s) / steps).round()))
+	return cells
 
 
 func find_pos_in_grid(pos: Vector2):

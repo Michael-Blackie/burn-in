@@ -41,7 +41,12 @@ func _ready() -> void:
 	for file_name in files:
 		if file_name.get_extension() == "tres":
 			all_upgrades.append(load(directory_path + file_name))
-			print(all_upgrades)
+
+	# Button order: earliest unlock first, then cheapest
+	all_upgrades.sort_custom(func(a: UpgradeData, b: UpgradeData) -> bool:
+		if a.requires_pages != b.requires_pages:
+			return a.requires_pages < b.requires_pages
+		return a.base_cost < b.base_cost)
 
 # Ash methods
 func add_ash(amount : float):
@@ -72,6 +77,7 @@ func remove_pages(amount : int):
 func new_grid() -> void:
 	pages += 1; pages_burned += 1
 	page_index += 1
+	pages_changed.emit(pages)
 	grid_changed.emit(current_size(), page_index + 1)
 
 
@@ -79,10 +85,16 @@ func new_grid() -> void:
 func level_of(u: UpgradeData) -> int:
 	return levels.get(u.id, 0)
 
+func is_locked(u: UpgradeData) -> bool:
+	return pages_burned < u.requires_pages
+
+func is_maxed(u: UpgradeData) -> bool:
+	return u.max_level > 0 and level_of(u) >= u.max_level
+
 func can_buy(u: UpgradeData) -> bool:
-	var lvl := level_of(u)
-	if u.max_level > 0 and lvl >= u.max_level:
+	if is_locked(u) or is_maxed(u):
 		return false
+	var lvl := level_of(u)
 	
 	var wallet : float
 	if u.currency == UpgradeData.Currency.ASH:
@@ -106,6 +118,7 @@ func buy(u: UpgradeData) -> void:
 
 func recalc_stats() -> void:
 	ash_multi = 1.0; brush_size = 1; auto_rate = 0.0; drag_erase = false
+	var ash_factor := 1.0   # multiplicative bonuses, applied after the additive ones
 	for u in all_upgrades:   # Array[UpgradeData], e.g. preloaded from src/data
 		var lvl := level_of(u)
 		match u.stat:
@@ -113,6 +126,8 @@ func recalc_stats() -> void:
 			UpgradeData.Stat.BRUSH_SIZE:  brush_size  += int(u.value_per_level) * lvl
 			UpgradeData.Stat.AUTO_RATE:   auto_rate   += u.value_per_level * lvl
 			UpgradeData.Stat.DRAG_ERASE:  drag_erase = lvl > 0
+			UpgradeData.Stat.ASH_FACTOR:  ash_factor *= pow(u.value_per_level, lvl)
+	ash_multi *= ash_factor
 
 func current_page() -> Texture2D:
 	return PAGES[mini(page_index, PAGES.size() - 1)]

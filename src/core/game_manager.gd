@@ -11,14 +11,25 @@ var brush_size : int = 1
 var auto_rate : float = 0.0
 var drag_erase : bool = false
 
+# The opening pages, in order. After these, pages come at random from PAGES_96.
 const PAGES: Array[Texture2D] = [
 	preload("res://assets/pages/shopping_16.png"),
 	preload("res://assets/pages/newspaper_32.png"),
 	preload("res://assets/pages/letter_48.png"),
 	preload("res://assets/pages/diary_64.png"),
+]
+
+# Never the same one twice in a row. Most are made by tools/gen_pages.ps1.
+const PAGES_96: Array[Texture2D] = [
 	preload("res://assets/pages/photo_96.png"),
 	preload("res://assets/pages/map_96.png"),
+	preload("res://assets/pages/diary2_96.png"),
+	preload("res://assets/pages/bill_96.png"),
+	preload("res://assets/pages/lost_dog_96.png"),
+	preload("res://assets/pages/postcard_96.png"),
+	preload("res://assets/pages/recipe_96.png"),
 ]
+var _page: Texture2D = PAGES[0]
 
 const BLANK_SIZES : Array[int] = [16, 32, 48, 64, 96, 96]
 var grid_size : int = 16
@@ -77,6 +88,7 @@ func remove_pages(amount : int):
 func new_grid() -> void:
 	pages += 1; pages_burned += 1
 	page_index += 1
+	_page = _next_page()
 	pages_changed.emit(pages)
 	grid_changed.emit(current_size(), page_index + 1)
 
@@ -130,7 +142,15 @@ func recalc_stats() -> void:
 	ash_multi *= ash_factor
 
 func current_page() -> Texture2D:
-	return PAGES[mini(page_index, PAGES.size() - 1)]
+	return _page
+
+func _next_page() -> Texture2D:
+	if page_index < PAGES.size():
+		return PAGES[page_index]
+	var pick := _page
+	while pick == _page:   # reroll repeats; needs at least 2 pages in PAGES_96
+		pick = PAGES_96.pick_random()
+	return pick
 
 func current_size() -> int:
 	var tex := current_page()

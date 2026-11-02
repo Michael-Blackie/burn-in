@@ -2,7 +2,7 @@ class_name UpgradeData
 extends Resource
 
 enum Currency { ASH, PAGES }
-enum Stat { ASH_MULTI, BRUSH_SIZE, AUTO_RATE, DRAG_ERASE, ASH_FACTOR }   # ASH_FACTOR multiplies, ASH_MULTI adds
+enum Stat { ASH_MULTI, BRUSH_SIZE, AUTO_RATE, DRAG_ERASE, ASH_FACTOR, AUTO_MULTI, END_GAME, PAGE_GAIN }   # ASH_FACTOR multiplies, ASH_MULTI adds. Only add to the end: .tres files store these as ints
 
 @export var id: StringName
 @export var display_name: String
@@ -26,6 +26,9 @@ func effect_text() -> String:
 		Stat.AUTO_RATE:  return "Burns %s pixels/s on its own" % NumFormat.rate(value_per_level)
 		Stat.DRAG_ERASE: return "Hold and drag to burn"
 		Stat.ASH_FACTOR: return "x%s all ash" % NumFormat.rate(value_per_level)
+		Stat.AUTO_MULTI: return "x%s auto burn" % NumFormat.rate(value_per_level)
+		Stat.END_GAME:   return "The deed comes next. Then the last page."
+		Stat.PAGE_GAIN:  return "+%d Page for every page burned" % int(value_per_level)
 	return ""
 
 ## The total this upgrade gives at a level, e.g. "+40%". Empty for on/off upgrades.
@@ -35,4 +38,6 @@ func total_text(level: int) -> String:
 		Stat.BRUSH_SIZE: return "+%d" % (int(value_per_level) * level)
 		Stat.AUTO_RATE:  return "%s/s" % NumFormat.rate(value_per_level * level)
 		Stat.ASH_FACTOR: return "x%s" % NumFormat.rate(pow(value_per_level, level))
+		Stat.AUTO_MULTI: return "x%s" % NumFormat.rate(pow(value_per_level, level))
+		Stat.PAGE_GAIN:  return "+%d" % (int(value_per_level) * level)
 	return ""

@@ -2,10 +2,12 @@
 # 3x5 pixel font (4px advance), dotted ruled lines, simple silhouettes.
 # Usage: powershell -ExecutionPolicy Bypass -File tools/gen_pages.ps1
 # Writes assets/pages/<name>_96.png. Optional -Preview <dir> also writes 5x enlarged copies.
+# -Only deed_96,last_96 writes just those pages (so hand edits to the others aren't overwritten).
 
 param(
 	[string]$OutDir = (Join-Path $PSScriptRoot "..\assets\pages"),
-	[string]$Preview = ""
+	[string]$Preview = "",
+	[string[]]$Only = @()
 )
 
 Add-Type -AssemblyName System.Drawing
@@ -77,6 +79,7 @@ function Ruled([int]$margin = 6) {
 }
 
 function Save-Page([string]$name) {
+	if ($Only.Count -gt 0 -and $Only -notcontains $name) { return }
 	$bmp = New-Object System.Drawing.Bitmap $Size, $Size, ([System.Drawing.Imaging.PixelFormat]::Format24bppRgb)
 	for ($y = 0; $y -lt $Size; $y++) { for ($x = 0; $x -lt $Size; $x++) {
 		$bmp.SetPixel($x, $y, $(if ($script:ink[$x, $y]) { [System.Drawing.Color]::Black } else { [System.Drawing.Color]::White }))
@@ -182,3 +185,42 @@ Fill 57 74 59 76; Fill 91 74 93 76                           # handles
 Fill 72 67 78 69; Fill 74 66 76 66                           # lid knob
 foreach ($sx in @(66, 75, 84)) { for ($k = 0; $k -lt 4; $k++) { Px ($sx + (($k % 2) * 2) - 1) (64 - 2 * $k) } }   # steam
 Save-Page "recipe_96"
+
+# ---------------------------------------------------------------- the deed to the house (ending, 1 of 2)
+New-Page
+Box 1 1 94 94; Box 3 3 92 92                                 # double border, official-looking
+TextC 7 'DEED' 2
+TextC 20 'TO THE PROPERTY AT'
+TextC 28 '14 MILL LANE'
+# the house, solid, with white windows and door
+for ($y = 36; $y -le 47; $y++) { $w = $y - 36; Fill (48 - $w) $y (47 + $w) $y }   # roof
+Fill 38 48 57 63                                             # walls
+Fill 40 51 44 55 $false; Fill 51 51 55 55 $false             # windows
+Fill 46 56 49 63 $false                                      # door
+Fill 53 38 55 43                                             # chimney
+HLine 8 87 64
+Text 8 70 'OWNER:'
+# signature scrawl
+Line 34 76 38 70; Line 38 70 40 76; Line 40 76 44 71; Line 44 71 45 75; Line 45 75 50 72; Line 50 72 56 74; Line 56 74 62 71
+Dotted 32 66 77
+# wax seal: dark disc with a ring
+Ellipse 79 82 8 8; Ellipse 79 82 5.5 5.5 $false; Ellipse 79 82 4 4
+Text 8 84 'NOT FOR SALE'
+Save-Page "deed_96"
+
+# ---------------------------------------------------------------- the last page: your birth certificate (ending, 2 of 2)
+New-Page
+Box 1 1 94 94
+TextC 5 'CERTIFICATE'
+TextC 12 'OF BIRTH'
+Fill 4 19 91 20
+Text 6 25 'NAME:'
+Fill 6 32 89 39                                              # your name, in ink: it won't burn
+Text 6 44 'BORN: 4 MAY'; Dotted 4 91 50
+Text 6 53 'AT: 14 MILL LANE'; Dotted 4 91 59
+Text 6 62 'MOTHER: MUM'; Dotted 4 91 68
+# a tiny footprint, the way they press them on these
+Ellipse 49 80 5.5 4.5; Ellipse 47.5 86 4 4.5; Fill 45 80 51 86   # front pad and heel
+Ellipse 52.5 73.5 2.2 2.2                                    # big toe
+foreach ($t in @(@(48.5, 72.5), @(45.5, 73.5), @(43, 75.5), @(41.5, 78.5))) { Ellipse $t[0] $t[1] 1.5 1.5 }   # small toes
+Save-Page "last_96"

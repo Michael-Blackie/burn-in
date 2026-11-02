@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+id = &"dry_paper"
+display_name = "Dry Paper"
+currency = 0
+base_cost = 8000.0
+cost_growth = 2.5
+max_level = 0
+stat = 0
+value_per_level = 1.0
+requires_pages = 4
+description = "Old paper burns cleanest."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"

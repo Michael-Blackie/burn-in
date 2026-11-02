@@ -10,6 +10,7 @@ const XFADE := 6.0                     # crossfade length
 const FIRST_FADE_IN := 2.0
 
 @export var volume_db := -12.0
+@export var cutscene : Node            # starts on its `begun` signal (the first click)
 
 var _players : Array[AudioStreamPlayer] = []
 var _current := 0
@@ -21,7 +22,7 @@ func _ready() -> void:
 		p.stream = TRACK
 		add_child(p)
 		_players.append(p)
-	_start(_players[0], FIRST_FADE_IN)
+	cutscene.begun.connect(func(): _start(_players[0], FIRST_FADE_IN))
 
 
 func _process(_delta: float) -> void:

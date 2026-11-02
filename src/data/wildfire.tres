@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://ccqbnylw3a8m6"]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+id = &"wildfire"
+display_name = "Wildfire"
+base_cost = 40000.0
+cost_growth = 1.4
+stat = 2
+value_per_level = 25.0
+requires_pages = 5
+description = "It doesn't need you any more."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"

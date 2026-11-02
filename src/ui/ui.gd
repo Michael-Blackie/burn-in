@@ -37,6 +37,7 @@ func _ready() -> void:
 	refresh_buttons()
 	_on_ash_changed(GameManager.ash)
 	_on_pages_changed(GameManager.pages)
+	_on_grid_changed(GameManager.current_size(), GameManager.page_index + 1)
 	_update_rate()
 
 func _process(delta: float) -> void:
@@ -59,9 +60,10 @@ func _update_rate():
 		NumFormat.rate(GameManager.ash_multi),
 		NumFormat.rate(GameManager.auto_rate * GameManager.ash_multi)]
 
-func _on_grid_changed(size : int, page_number : int):
-	grid_size_label.text = str(size) + " X " + str(size)
-	page_label.text = "PAGE %02d" % page_number
+# Header: the page's name on the left, its number on the right.
+func _on_grid_changed(_size : int, page_number : int):
+	page_label.text = GameManager.current_page_name()
+	grid_size_label.text = "PAGE %02d" % page_number
 
 func _on_pixel_erased(remaining: int, total: int):
 	canvas_progress_label.text = "%s / %s" % [NumFormat.short(remaining), NumFormat.short(total)]

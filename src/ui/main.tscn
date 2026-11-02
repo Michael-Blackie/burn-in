@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://b4pqweqscfdhg" path="res://src/audio/burn_sfx.gd" id="4_sfx"]
 [ext_resource type="Script" uid="uid://btmahuyg3e4pm" path="res://src/audio/music.gd" id="5_music"]
 [ext_resource type="Script" uid="uid://dyf4dkd5labho" path="res://src/audio/ui_sfx.gd" id="6_uisfx"]
+[ext_resource type="Script" uid="uid://kg3dwbal2c8" path="res://src/ui/cutscene.gd" id="7_cutscene"]
+[ext_resource type="Shader" uid="uid://bqgxgjfwmv7hk" path="res://assets/shaders/dither_fade.gdshader" id="8_fade"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvdti"]
 shader = ExtResource("3_oo34p")
@@ -17,6 +19,13 @@ shader_parameter/dot_px = 3.0
 shader_parameter/ash_level = 1.0
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_tabs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fade"]
+shader = ExtResource("8_fade")
+shader_parameter/ink_color = Color(0, 0, 0, 1)
+shader_parameter/coverage = 1.0
+shader_parameter/size_px = Vector2(1280, 720)
+shader_parameter/dot_px = 3.0
 
 [node name="GUI" type="Control" unique_id=395760597 node_paths=PackedStringArray("canvas", "ash_label", "ash_rate_label", "pages_label", "pages_box", "pages_tab", "grid_size_label", "page_label", "canvas_progress_label", "canvas_progress", "ash_upgrades", "page_upgrades", "tooltip", "tooltip_title", "tooltip_body")]
 layout_mode = 3
@@ -236,8 +245,9 @@ show_percentage = false
 script = ExtResource("4_sfx")
 canvas = NodePath("../HBoxContainer/CanvasArea/CanvasColumn/CanvasFrame/TextureRect")
 
-[node name="Music" type="Node" parent="." unique_id=1730512984]
+[node name="Music" type="Node" parent="." unique_id=1730512984 node_paths=PackedStringArray("cutscene")]
 script = ExtResource("5_music")
+cutscene = NodePath("../Cutscene")
 
 [node name="UiSfx" type="Node" parent="." unique_id=1904377125 node_paths=PackedStringArray("ui")]
 script = ExtResource("6_uisfx")
@@ -266,6 +276,74 @@ custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 text = "What it does"
 autowrap_mode = 3
+
+[node name="Cutscene" type="Control" parent="." unique_id=1311725093 node_paths=PackedStringArray("bg", "title_label", "line_label", "stats_label", "hint_label", "restart_button")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_cutscene")
+bg = NodePath("Bg")
+title_label = NodePath("Center/VBox/Title")
+line_label = NodePath("Center/VBox/Line")
+stats_label = NodePath("Center/VBox/Stats")
+hint_label = NodePath("Center/VBox/Hint")
+restart_button = NodePath("Center/VBox/Restart")
+
+[node name="Bg" type="ColorRect" parent="Cutscene" unique_id=1782540331]
+material = SubResource("ShaderMaterial_fade")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Cutscene" unique_id=1036629874]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Cutscene/Center" unique_id=1450372668]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 32
+
+[node name="Title" type="Label" parent="Cutscene/Center/VBox" unique_id=1964120488]
+layout_mode = 2
+theme_type_variation = &"LabelCounter"
+text = "BURN-IN"
+horizontal_alignment = 1
+
+[node name="Line" type="Label" parent="Cutscene/Center/VBox" unique_id=1220397551]
+visible = false
+custom_minimum_size = Vector2(960, 0)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Stats" type="Label" parent="Cutscene/Center/VBox" unique_id=1590842776]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Cutscene/Center/VBox" unique_id=1717463521]
+layout_mode = 2
+text = "CLICK TO BEGIN"
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="Cutscene/Center/VBox" unique_id=1395867202]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "BURN AGAIN"
 
 [connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/AshTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/AshUpgrades" method="set_visible"]
 [connection signal="toggled" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/TabButtons/PagesTab" to="HBoxContainer/Panel/MarginContainer/VBoxContainer/PageUpgrades" method="set_visible"]

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" uid="uid://8ps2mqeq8gii" path="res://src/data/upgrade_data.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+id = &"the_deed"
+display_name = "The Deed"
+currency = 1
+base_cost = 8.0
+cost_growth = 1.0
+max_level = 1
+stat = 6
+value_per_level = 1.0
+requires_pages = 10
+description = "The house was the last thing you owned."
+metadata/_custom_type_script = "uid://8ps2mqeq8gii"
